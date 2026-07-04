@@ -1,57 +1,65 @@
 # Soft View
 
-เบา, native 100%, ไม่มี sandbox, ทำงานได้ทั้ง X11 และ Wayland
-ดูวิดีโอ, รูปภาพ, ฟังเพลง ด้วย engine เดียว (libmpv)
+Lightweight, 100% native, no sandbox, supports both X11 and Wayland.
+Watch videos, view images, and listen to music using a single engine (libmpv).
 
-## สถาปัตยกรรม
-- **SDL2** — window + input, auto-detect X11/Wayland
-- **libmpv** (render API) — decode/render วิดีโอ, รูปภาพ, เสียง
-- **Dear ImGui** — overlay control bar แบบเบา (ไม่มี widget tree ให้ init)
+## Architecture
+
+* **SDL2** — window + input, auto-detects X11/Wayland
+* **libmpv** (render API) — decode/render video, images, and audio
+* **Dear ImGui** — lightweight overlay control bar (no widget tree to initialize)
 
 ## Dependencies
 
 ### Debian / Ubuntu
-```
+
+```bash
 sudo apt install build-essential cmake pkg-config libsdl2-dev libmpv-dev
+
 ```
 
 ### Fedora
-```
+
+```bash
 sudo dnf install gcc-c++ cmake pkgconf-pkg-config SDL2-devel mpv-libs-devel
+
 ```
 
 ### Arch
-```
+
+```bash
 sudo pacman -S base-devel cmake sdl2 mpv
+
 ```
 
 ## Build
-```
+
+```bash
 mkdir build && cd build
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make -j$(nproc)
-```
-ได้ binary ที่ `build/soft-view` — รันตรงๆ ได้เลย ไม่ต้อง install อะไรเพิ่ม
 
-## ใช้งาน
 ```
+
+This yields a binary at `build/soft-view` — you can run it directly without any additional installation.
+
+## Usage
+
+```bash
 ./soft-view /path/to/video.mp4
 ./soft-view /path/to/photo.jpg
 ./soft-view /path/to/song.mp3
-```
-หรือเปิดโปรแกรมเปล่าๆ แล้วลากไฟล์มาวางในหน้าต่าง
 
-## คีย์ลัด
-| ปุ่ม | การทำงาน |
-|---|---|
+```
+
+Alternatively, open the application without arguments and drag-and-drop a file into the window.
+
+## Shortcuts
+
+| Key | Action |
+| --- | --- |
 | Space | Play / Pause |
 | F | Fullscreen |
-| Esc | ออก fullscreen |
-| ← / → | Seek ถอย/เดินหน้า 5 วินาที |
-| ขยับเมาส์ | โชว์ control bar (ซ่อนอัตโนมัติหลัง 2.5s ตอนกำลังเล่น) |
-
-## Roadmap ที่ยังไม่ทำ (เพิ่มได้ทีหลัง)
-- Playlist / sidebar (ตอนนี้ตั้งใจตัดออกเพื่อความเบา ตาม UI แบบ A ที่เลือก)
-- Config file สำหรับ default volume, hwdec เป็นต้น
-- .desktop file + icon สำหรับ integrate เข้า file manager / app launcher
-- Package เป็น .deb/.rpm/PKGBUILD สำหรับแจกจ่าย
+| Esc | Exit fullscreen |
+| ← / → | Seek backward/forward 5 seconds |
+| Mouse movement | Show control bar (auto-hides after 2.5s during playback) |
